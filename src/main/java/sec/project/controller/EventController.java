@@ -25,6 +25,4 @@ public class EventController {
         model.addAttribute("password", password);
         return "event";
     }
-
-
 }
