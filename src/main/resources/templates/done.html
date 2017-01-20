@@ -7,10 +7,10 @@
     <div th:replace="fragments/header :: header"></div>
 
         <h1>Thank you! You have been signed up to the event!</h1>
-        Your information: Name: <span th:utext="${signup.name}">NamePlaveholder</span>,
-        Address: <span th:utext="${signup.address}">AddressPlaceholder</span>,
-        Id: <span th:utext="${signup.id}">id</span>,
-        Event password: <span th:utext="${signup.password}">passwd</span>
+        Your information: Name: <span th:text="${signup.name}">NamePlaveholder</span>,
+        Address: <span th:text="${signup.address}">AddressPlaceholder</span>,
+        Id: <span th:text="${signup.id}">id</span>,
+        Event password: <span th:text="${signup.password}">passwd</span>
         <!--/*@thymesVar id="redirect" type="java.lang.String"*/-->
     <p>Your personalized event details will be <a th:href="@{/event/{id}/{password}(id=${signup.id},password=${signup.password})}">here</a></p>
         <p th:if="${redirect}"><a th:href="${redirect}">Continue to where you were before</a></p>

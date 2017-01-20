@@ -9,9 +9,9 @@
 
     <div id="details" style="display: none;">
         <h1>Event details</h1>
-        Your information: Name: <span th:utext="${signup.name}">NamePlaceholder</span>,
-        Address: <span th:utext="${signup.address}">AddressPlaceholder</span>,
-        Id: <span th:utext="${signup.id}">id</span>
+        Your information: Name: <span th:text="${signup.name}">NamePlaceholder</span>,
+        Address: <span th:text="${signup.address}">AddressPlaceholder</span>,
+        Id: <span th:text="${signup.id}">id</span>
 
         <p>More details to follow</p>
     </div>

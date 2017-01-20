@@ -29,7 +29,7 @@ public class SignupController {
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.GET)
-    public String loadForm(Model model, @RequestParam(required = false) String redirect, @RequestHeader("Referer") String referer) {
+    public String loadForm(Model model, @RequestParam(required = false) String redirect, @RequestHeader(name = "Referer", required = false) String referer) {
         if(redirect != null) {
         } else {
             redirect = referer;

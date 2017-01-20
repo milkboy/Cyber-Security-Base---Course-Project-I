@@ -1,29 +1,57 @@
 # Project report
 Vulnerability (and fix suggestion) report for _Cyber Security Base - Course Project I_.
 
+To run the project, use either
+- maven: `mvn spring-boot:run` and go to `http://localhost:8080/`
+- deploy WAR on tomcat/GlassFish/...: `mvn package` produces the WAR in target/
+
+Oh, and the admin username is "ted", and password "ted".
+
 ### A1 Injection
 The admin page has a method for showing a single signup, like
 `http://localhost:8080/admin/1`. The "1" equals the id parameter
-and is easily exploitable.
+and is easily exploitable (blind sql injection at least).
 The exploitability is worsened by the fact that this page is world accessible
 without authentication. 
 
 ##### Exploit
 https://github.com/sqlmapproject/sqlmap can be used for verification.
-like `python sqlmap.py -u "http://localhost:8080/admin/1*" -b --dbms=hsqldb`
+Like so: `python sqlmap.py -u "http://localhost:8080/admin/1*" -b` to get the
+database version string:
+
+~~~~
+URI parameter '#1*' is vulnerable. Do you want to keep testing the others (if any)? [y/N]
+sqlmap identified the following injection point(s) with a total of 64 HTTP(s) requests:
+---
+Parameter: #1* (URI)
+  Type: boolean-based blind
+  Title: AND boolean-based blind - WHERE or HAVING clause
+  Payload: http://localhost:8080/admin/1' AND 9007=9007 AND 'zfcO'='zfcO
+---
+[11:50:28] [INFO] retrieved: 2.3.3
+back-end DBMS: HSQLDB = 2.3.3
+banner:    '2.3.3'
+~~~~
+
 ##### Fix
 Don't use "dynamic" SQL queries. EVER. If really needed, any JPA query can be specified
-and parameterized as needed, and the parameters will be automatically escaped properly.
+and parametrized as needed, and the parameters will be automatically escaped properly.
 The whole custom signup repository is unneeded, as the logic should be in the controller.
 
+####Bonus
+Also the signup form uses dynamic SQL
+
+
 ### A3 Cross-Site Scripting
-The admin page http://localhost:8080/admin renders the table with whatever raw data the
+The admin page(s) `http://localhost:8080/admin` renders the table with whatever raw data the
 users have entered, including html tags.
 
 ##### Exploit
 Usually, this should need a SQL injection or something, but the application
-does not validate input before storing in the DB. Just enter
-`<script>alert('pwned');</script>` as name or address for proof.
+does not validate input before storing in the DB nor before displaying it. Just enter
+`<script>alert("pwned");</script>` as name or address for proof. (Remember that single quotes
+will cause SQL statement errors ;)
+Results are visible on the admin page.
 
 ##### Fix
 `th:utext` is insecure by design, use `th:text` instead
