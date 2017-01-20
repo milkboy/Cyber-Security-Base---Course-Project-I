@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Participant administration</title>
+    </head>
+    <body>
+    <div th:replace="fragments/header :: header"></div>
+
+    <div>
+        <table style="border: 1px solid darkblue;">
+            <!--/*@thymesVar id="ppl" type="java.util.List<sec.project.domain.Signup>"*/-->
+            <tr th:each="p : ${ppl}">
+                <td style="border: 1px solid darkgreen;">
+                <a th:href="@{/admin/{id}(id=${p.id})}" th:utext="${p.id}">Id placeholder</a></td>
+                <td style="border: 1px solid darkgreen;" th:utext="${p.name}">Name placeholder</td>
+                <td style="border: 1px solid darkgreen;" th:utext="${p.address}">Address placeholder</td>
+            </tr>
+        </table>
+    </div>
+    </body>
+</html>

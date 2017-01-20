@@ -15,14 +15,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final UserDetailsService userDetailsService;
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    public SecurityConfiguration(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // no real security at the moment
         http.authorizeRequests()
-                .anyRequest().permitAll();
+                .antMatchers("/admin", "/admin/").authenticated()
+                .anyRequest().permitAll()
+                .and().formLogin().loginPage("/login")//.permitAll()
+                .and().logout()//.permitAll();
+        ;
+        //
+        http.csrf().disable();
     }
 
     @Autowired
@@ -34,4 +44,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
