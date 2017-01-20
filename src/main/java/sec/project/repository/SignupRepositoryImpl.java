@@ -1,5 +1,6 @@
 package sec.project.repository;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.internal.SessionImpl;
 import org.springframework.security.crypto.codec.Hex;
 import org.springframework.transaction.annotation.Propagation;
@@ -34,7 +35,7 @@ public class SignupRepositoryImpl implements SignupRepositoryCustom {
 
         MessageDigest highlySecureEncryptor = MessageDigest.getInstance("MD5");
         Connection conn = em.unwrap(SessionImpl.class).connection();
-        String insecurePassword = "fixme";
+        String insecurePassword = RandomStringUtils.randomAlphabetic(4);
         highlySecureEncryptor.update(insecurePassword.getBytes());
         String securePassword = new String(Hex.encode(highlySecureEncryptor.digest()));
         String query = "insert into Signup (name, address, password) values ('" + s.getName() + "', '" + s.getAddress()

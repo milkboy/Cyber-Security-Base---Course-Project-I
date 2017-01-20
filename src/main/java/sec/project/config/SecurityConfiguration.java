@@ -26,12 +26,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // no real security at the moment
         http.authorizeRequests()
-                .antMatchers("/admin", "/admin/").authenticated()
+                .antMatchers("/admin", "/admin/").authenticated() //FIXME
+                //.antMatchers("/admin/**").authenticated()
                 .anyRequest().permitAll()
                 .and().formLogin().loginPage("/login")//.permitAll()
                 .and().logout()//.permitAll();
         ;
-        //
+        //please don't disable ;)
         http.csrf().disable();
     }
 
