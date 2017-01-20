@@ -14,6 +14,8 @@ public class MiscConfig {
     public MiscConfig(SignupRepository signupRepository) {
         this.signupRepository = signupRepository;
         Signup demoSignup = new Signup("John Doe", "Sample address");
+        demoSignup.setPassword("d3b07384d113edec49eaa6238ad5ff00");
         this.signupRepository.saveAndFlush(demoSignup);
     }
+
 }

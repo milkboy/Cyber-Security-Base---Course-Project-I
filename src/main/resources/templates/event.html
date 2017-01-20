@@ -1,0 +1,28 @@
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Event info!</title>
+    </head>
+    <body>
+    <script th:src="@{/static/md5.js}"></script>
+    <div th:replace="fragments/header :: header"></div>
+
+    <div id="details" style="display: none;">
+        <h1>Event details</h1>
+        Your information: Name: <span th:utext="${signup.name}">NamePlaceholder</span>,
+        Address: <span th:utext="${signup.address}">AddressPlaceholder</span>,
+        Id: <span th:utext="${signup.id}">id</span>
+
+        <p>More details to follow</p>
+    </div>
+
+    <script th:inline="javascript">
+        if(md5(/*[[${password}]]*/'') !== [[${signup.password}]]) {
+            alert("wrong pass");
+        } else {
+            document.getElementById('details').style.display = 'block';
+        }
+    </script>
+
+    </body>
+</html>

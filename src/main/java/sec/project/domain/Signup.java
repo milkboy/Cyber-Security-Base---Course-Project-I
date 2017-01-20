@@ -16,6 +16,7 @@ public class Signup extends AbstractPersistable<Long> {
     private Long id;
     private String name;
     private String address;
+    private String password;
 
     public Signup() {
         super();
@@ -53,5 +54,18 @@ public class Signup extends AbstractPersistable<Long> {
     @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

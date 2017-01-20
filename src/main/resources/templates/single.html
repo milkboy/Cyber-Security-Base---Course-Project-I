@@ -4,14 +4,17 @@
         <title>Participant administration</title>
     </head>
     <body>
+    <div th:replace="fragments/header :: header"></div>
 
     <div>
-        <table style="border: 1px solid darkblue;">
+        <h1 th:if="${s == null}">No such user</h1>
+        <table th:if="${s != null}" style="border: 1px solid darkblue;">
             <!--/*@thymesVar id="ppl" type="java.util.List<sec.project.domain.Signup>"*/-->
             <tr>
                 <td style="border: 1px solid darkgreen;" th:utext="${s.id}">Id placeholder</td>
                 <td style="border: 1px solid darkgreen;" th:utext="${s.name}">Name placeholder</td>
                 <td style="border: 1px solid darkgreen;" th:utext="${s.address}">Address placeholder</td>
+                <td style="border: 1px solid darkgreen;" th:utext="${s.password}">Password placeholder</td>
             </tr>
         </table>
     </div>
