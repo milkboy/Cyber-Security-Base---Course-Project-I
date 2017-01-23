@@ -7,7 +7,7 @@
     <script th:src="@{/static/md5.js}"></script>
     <div th:replace="fragments/header :: header"></div>
 
-    <div id="details" style="display: none;">
+    <div id="details">
         <h1>Event details</h1>
         Your information: Name: <span th:text="${signup.name}">NamePlaceholder</span>,
         Address: <span th:text="${signup.address}">AddressPlaceholder</span>,
@@ -15,14 +15,6 @@
 
         <p>More details to follow</p>
     </div>
-
-    <script th:inline="javascript">
-        if(md5(/*[[${password}]]*/'') !== [[${signup.password}]]) {
-            alert("wrong pass");
-        } else {
-            document.getElementById('details').style.display = 'block';
-        }
-    </script>
 
     </body>
 </html>
