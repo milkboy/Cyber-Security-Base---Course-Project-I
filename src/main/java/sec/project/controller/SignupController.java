@@ -2,7 +2,6 @@ package sec.project.controller;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.codec.Hex;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import sec.project.domain.Signup;
 import sec.project.repository.SignupRepository;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 @Controller
@@ -60,8 +58,7 @@ public class SignupController {
             Signup secureSignup = new Signup();
             secureSignup.setAddress(address);
             secureSignup.setName(name);
-            //secureSignup.setPassword(passwordEncoder.encode(getPassword()));
-            secureSignup.setPassword(encodePassword(getPassword()));
+            secureSignup.setPassword(encodePassword(password));
             signupRepository.save(secureSignup);
             secureSignup.setPassword(password); //Need to send clear text password to the user
             model.addAttribute("signup", secureSignup);
@@ -82,12 +79,7 @@ public class SignupController {
 
     private String encodePassword(String password) throws NoSuchAlgorithmException {
         //Secure version:
-        //return passwordEncoder.encode(password);
-
-        //Insecure version
-        MessageDigest highlySecureEncryptor = MessageDigest.getInstance("MD5");
-        highlySecureEncryptor.update(password.getBytes());
-        return new String(Hex.encode(highlySecureEncryptor.digest()));
+        return passwordEncoder.encode(password);
     }
 
     private String cleanRedirect(String redirect) {

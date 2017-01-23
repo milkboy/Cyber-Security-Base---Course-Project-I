@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import sec.project.domain.Signup;
 import sec.project.repository.SignupRepository;
 
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 @Controller
@@ -28,19 +27,10 @@ public class EventController {
     public String defaultMapping(@PathVariable Long id, @PathVariable String password, Model model) throws NoSuchAlgorithmException {
         Signup res = signupRepository.findOne(id);
         //Verify password here!
-        //MD5
-        MessageDigest highlySecureEncryptor = MessageDigest.getInstance("MD5");
-        highlySecureEncryptor.update(password.getBytes());
-
-        if(highlySecureEncryptor.toString().equals(res.getPassword())) {
-            return "redirect:/";
-        }
-        /*
         //Bcrypt
-        if(!passwordEncoder.matches(password, res.getPassword())) {
+        if(res == null || !passwordEncoder.matches(password, res.getPassword())) {
             return "redirect:/";
         }
-        */
 
         model.addAttribute("signup", res);
         model.addAttribute("password", password);
