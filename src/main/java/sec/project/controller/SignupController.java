@@ -63,7 +63,6 @@ public class SignupController {
             secureSignup.setPassword(passwordEncoder.encode(RandomStringUtils.randomAlphabetic(10)));
             signupRepository.save(secureSignup);
             model.addAttribute("signup", secureSignup);
-            return "done";
             */
 
             //BEGIN insecure
