@@ -28,7 +28,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/{id}", method = RequestMethod.GET)
-    public String listSignup(Model model, @PathVariable String id) throws SQLException {
+    public String listSignup(Model model, @PathVariable Long id) throws SQLException {
         try {
             Signup s = signupRepository.findOne(id);
             model.addAttribute("s", s);
@@ -39,7 +39,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String listSignups(Model model, @RequestParam(required = false) String id) throws SQLException {
+    public String listSignups(Model model, @RequestParam(required = false) Long id) throws SQLException {
         if(id != null) {
             Signup s = signupRepository.findOne(id);
             if(s != null) {

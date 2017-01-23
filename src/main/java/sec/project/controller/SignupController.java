@@ -61,7 +61,6 @@ public class SignupController {
         try {
             String password = getPassword();
 
-            /*
             Signup secureSignup = new Signup();
             secureSignup.setAddress(address);
             secureSignup.setName(name);
@@ -70,15 +69,6 @@ public class SignupController {
             signupRepository.save(secureSignup);
             secureSignup.setPassword(password); //Need to send clear text password to the user
             model.addAttribute("signup", secureSignup);
-            */
-
-            //BEGIN insecure
-            Signup s = new Signup(name, address);
-            s.setPassword(encodePassword(password));
-            s = signupRepository.customSave(s);
-            s.setPassword(password); //Need to send clear text password to the user
-            model.addAttribute("signup", s);
-            //END
 
             if (redirect != null) {
                 /*
