@@ -1,4 +1,6 @@
 # Project report
+The code is available @ https://github.com/milkboy/Cyber-Security-Base---Course-Project-I
+
 To read the full report, access it @ 
 https://github.com/milkboy/Cyber-Security-Base---Course-Project-I/blob/master/doc/report.md
 
@@ -9,6 +11,8 @@ To run the project, use either
 - deploy WAR on tomcat/GlassFish/...: `mvn package` produces the WAR in target/
 
 Oh, and the admin username is "ted", and password "ted".
+
+The proposed fixes are also stored in the `FIX` branch, for easy application ;)
 
 ### A1 Injection
 The admin page has a method for showing a single signup, like
@@ -161,6 +165,9 @@ public class ExceptionHandlerController {
     }
 }
 ~~~
+
+4) MD5 hashes should not be used. Ever. Not even for "non-important" hashing. The BCrypt version is way more secure, and only slightly
+slower. Replace any MD5 calls with more secure ones (using the passwordEncoder bean is a good start)
 
 ### A6 Sensitive Data Exposure
 The "very secure" password hash (and all other details also) of any registered 
