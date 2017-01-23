@@ -32,8 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // no real security at the moment
         http.authorizeRequests()
-                .antMatchers("/admin", "/admin/").authenticated() //FIXME
-                //.antMatchers("/admin/**").authenticated()
+                //.antMatchers("/admin", "/admin/").authenticated() //FIXME
+                .antMatchers("/admin/**").authenticated()
                 .anyRequest().permitAll()
                 .and().formLogin().loginPage("/login")//.permitAll()
                 .and().logout()//.permitAll();
@@ -61,8 +61,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     HttpSessionStrategy httpSessionStrategy() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-        serializer.setUseHttpOnlyCookie(false); //REMOVE ME
-        serializer.setUseSecureCookie(false);
 
         CookieHttpSessionStrategy strategy = new CookieHttpSessionStrategy();
         strategy.setCookieSerializer(serializer);
