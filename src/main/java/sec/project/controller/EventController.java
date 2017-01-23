@@ -32,7 +32,7 @@ public class EventController {
         MessageDigest highlySecureEncryptor = MessageDigest.getInstance("MD5");
         highlySecureEncryptor.update(password.getBytes());
 
-        if(highlySecureEncryptor.toString() != res.getPassword()) {
+        if(highlySecureEncryptor.toString().equals(res.getPassword())) {
             return "redirect:/";
         }
         //Bcrypt

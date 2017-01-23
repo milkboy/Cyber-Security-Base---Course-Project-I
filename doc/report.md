@@ -185,21 +185,20 @@ GUID or something;
 ### A8 Cross-Site Request Forgery
 The application has no CSRF tokens on any forms, meaning that any site containing something like:
 ~~~
+<html>
 <form action="http://localhost:8080/form" method="post">
 <input type="text" name="name" />
 <input type="text" name="address" />
 <button type="sumbit">SubmitForm</button>
 </form>
+</html>
 ~~~
 can be used to submit information to the page.
 
 ##### Exploit
-1) Try it out:
-<form action="http://localhost:8080/form" method="post">
-<input type="hidden" name="name" value="Eve" />
-<input type="hidden" name="address" value="Haxxor@somewhere" />
-<button type="sumbit">DoIt</button>
-</form>
+1) Add above code to a new file, and open it in your browser. Insert some data and submit.
+
+2) Check admin page to see that the info was entered
 
 ##### Fix
 1) Simply remove
@@ -221,7 +220,9 @@ implement automatic forwarding, as the "event details" link might then go unnoti
 Redirect parameters should usually not be used. If the need actually arises, the redirect
 should only contain a relative path, preferably without query parameters, and it should be
 validated before being used.
-1) `SignupController.java` should call the `cleanRedirect()`-method before passing the variable
+1) `SignupController.java` should call the `cleanRedirect()`-method before passing the variable. 
+Now any request not matching `(/[a-z0-9]*)*` will result in a redirect to the index page
+
 
 ### Misc comments
 
