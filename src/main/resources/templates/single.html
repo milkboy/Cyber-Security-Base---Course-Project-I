@@ -12,10 +12,10 @@
         <table th:if="${s != null}" style="border: 1px solid darkblue;">
             <!--/*@thymesVar id="ppl" type="java.util.List<sec.project.domain.Signup>"*/-->
             <tr>
-                <td style="border: 1px solid darkgreen;" th:utext="${s.id}">Id placeholder</td>
-                <td style="border: 1px solid darkgreen;" th:utext="${s.name}">Name placeholder</td>
-                <td style="border: 1px solid darkgreen;" th:utext="${s.address}">Address placeholder</td>
-                <td style="border: 1px solid darkgreen;" th:utext="${s.password}">Password placeholder</td>
+                <td style="border: 1px solid darkgreen;" th:text="${s.id}">Id placeholder</td>
+                <td style="border: 1px solid darkgreen;" th:text="${s.name}">Name placeholder</td>
+                <td style="border: 1px solid darkgreen;" th:text="${s.address}">Address placeholder</td>
+                <td style="border: 1px solid darkgreen;" th:text="${s.password}">Password placeholder</td>
             </tr>
         </table>
     </div>

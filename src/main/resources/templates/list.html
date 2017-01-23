@@ -11,9 +11,9 @@
             <!--/*@thymesVar id="ppl" type="java.util.List<sec.project.domain.Signup>"*/-->
             <tr th:each="p : ${ppl}">
                 <td style="border: 1px solid darkgreen;">
-                <a th:href="@{/admin/{id}(id=${p.id})}" th:utext="${p.id}">Id placeholder</a></td>
-                <td style="border: 1px solid darkgreen;" th:utext="${p.name}">Name placeholder</td>
-                <td style="border: 1px solid darkgreen;" th:utext="${p.address}">Address placeholder</td>
+                <a th:href="@{/admin/{id}(id=${p.id})}" th:text="${p.id}">Id placeholder</a></td>
+                <td style="border: 1px solid darkgreen;" th:text="${p.name}">Name placeholder</td>
+                <td style="border: 1px solid darkgreen;" th:text="${p.address}">Address placeholder</td>
             </tr>
         </table>
     </div>
