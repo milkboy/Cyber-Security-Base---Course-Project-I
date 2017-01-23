@@ -1,15 +1,12 @@
 package sec.project.repository;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.internal.SessionImpl;
-import org.springframework.security.crypto.codec.Hex;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import sec.project.domain.Signup;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -33,12 +30,8 @@ public class SignupRepositoryImpl implements SignupRepositoryCustom {
         Insecure implementation
          */
 
-        MessageDigest highlySecureEncryptor = MessageDigest.getInstance("MD5");
         Connection conn = em.unwrap(SessionImpl.class).connection();
-        String insecurePassword = RandomStringUtils.randomAlphabetic(4);
-        highlySecureEncryptor.update(insecurePassword.getBytes());
-        String securePassword = new String(Hex.encode(highlySecureEncryptor.digest()));
-        String query = "insert into Signup (password, name, address) values ('" + securePassword
+        String query = "insert into Signup (password, name, address) values ('" + s.getPassword()
                 + "', '" + s.getName() + "', '" + s.getAddress() +"')";
         Statement statement = conn.createStatement();
         boolean success = statement.execute(query);
@@ -46,7 +39,6 @@ public class SignupRepositoryImpl implements SignupRepositoryCustom {
         if(res.next()) {
             s.setId(res.getLong(1));
         }
-        s.setPassword(insecurePassword);
         return s;
 
     }
