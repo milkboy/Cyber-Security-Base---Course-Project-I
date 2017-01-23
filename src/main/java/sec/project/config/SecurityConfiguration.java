@@ -58,12 +58,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new MapSessionRepository();
     }
 
-    /*This is bad! Mmkay?*/
     @Bean
     HttpSessionStrategy httpSessionStrategy() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
-        serializer.setCookieName("InsecureSessId");
-        serializer.setUseHttpOnlyCookie(false);
+        serializer.setUseHttpOnlyCookie(false); //REMOVE ME
         serializer.setUseSecureCookie(false);
 
         CookieHttpSessionStrategy strategy = new CookieHttpSessionStrategy();

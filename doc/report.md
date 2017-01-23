@@ -90,8 +90,11 @@ Don't use "dynamic" SQL queries. **EVER**. If really needed, any JPA query can b
 and parametrized as needed, and the parameters will be automatically escaped properly.
 
 1) The whole custom signup repository is unneeded, as the logic should be in the controller.
-Remove SignupRepositoryCustom.java and SignupRepositoryImpl
-2) FIXME
+Remove SignupRepositoryCustom.java and SignupRepositoryImpl (and remove any references)
+
+2) Change all `id` parameters to be `Long` instead of `String`
+
+3) Change SignupController.java to use the `secureSignup` version that is commented out.
 
 ####Bonus
 Also the signup form uses dynamic SQL
@@ -134,8 +137,9 @@ Steps to reproduce:
 are ok to access unauthenticated, and then require authentication (and authorization also!) 
 for everything else.
 
-2) `MapSessionRepository sessionRepository()` and `HttpSessionStrategy httpSessionStrategy()` should be
-removed from `SecurityConfiguraion.java`
+2) If a custom session handler is needed for whatever reason (distributed servers etc),
+remove at least the `serializer.setUseHttpOnlyCookie(false);`-line in `SecurityConfiguration.java`
+to prevent javascript from accessing the cookie.
 
 3) Exceptions should be caught and a generic error page displayed instead, possibly a global ExceptionHandlerController.java.
 ~~~java
