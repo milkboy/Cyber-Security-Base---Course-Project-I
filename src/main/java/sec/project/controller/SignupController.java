@@ -41,11 +41,7 @@ public class SignupController {
         if (redirect == null) {
             redirect = referer;
         }
-        /* correct
-           model.addAttribute("redirect", cleanRedirect(redirect));
-        */
-        //Insecure
-        model.addAttribute("redirect", redirect);
+        model.addAttribute("redirect", cleanRedirect(redirect));
 
         return "form";
     }
@@ -71,13 +67,7 @@ public class SignupController {
             model.addAttribute("signup", secureSignup);
 
             if (redirect != null) {
-                /*
-                 * correct code
                 model.addAttribute("redirect", cleanRedirect(redirect));
-                */
-                //BEGIN insecure
-                model.addAttribute("redirect", redirect);
-                //END
             }
         } catch (Exception ex) {
             model.addAttribute("error", ex.getMessage());
