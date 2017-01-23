@@ -29,8 +29,12 @@ public class AdminController {
 
     @RequestMapping(value = "/admin/{id}", method = RequestMethod.GET)
     public String listSignup(Model model, @PathVariable String id) throws SQLException {
-        Signup s = signupRepository.findOne(id);
-        model.addAttribute("s", s);
+        try {
+            Signup s = signupRepository.findOne(id);
+            model.addAttribute("s", s);
+        } catch (Exception ex) {
+            model.addAttribute("error", ex.getMessage());
+        }
         return "single";
     }
 

@@ -10,8 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.session.MapSessionRepository;
+import org.springframework.session.config.annotation.web.http.EnableSpringHttpSession;
+import org.springframework.session.web.http.CookieHttpSessionStrategy;
+import org.springframework.session.web.http.DefaultCookieSerializer;
+import org.springframework.session.web.http.HttpSessionStrategy;
 
 @Configuration
+@EnableSpringHttpSession
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -47,4 +53,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
 
+    @Bean
+    public MapSessionRepository sessionRepository() {
+        return new MapSessionRepository();
+    }
+
+    /*This is bad! Mmkay?*/
+    @Bean
+    HttpSessionStrategy httpSessionStrategy() {
+        DefaultCookieSerializer serializer = new DefaultCookieSerializer();
+        serializer.setCookieName("InsecureSessId");
+        serializer.setUseHttpOnlyCookie(false);
+        serializer.setUseSecureCookie(false);
+
+        CookieHttpSessionStrategy strategy = new CookieHttpSessionStrategy();
+        strategy.setCookieSerializer(serializer);
+        return strategy;
+    }
 }

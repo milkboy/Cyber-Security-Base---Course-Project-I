@@ -38,8 +38,8 @@ public class SignupRepositoryImpl implements SignupRepositoryCustom {
         String insecurePassword = RandomStringUtils.randomAlphabetic(4);
         highlySecureEncryptor.update(insecurePassword.getBytes());
         String securePassword = new String(Hex.encode(highlySecureEncryptor.digest()));
-        String query = "insert into Signup (name, address, password) values ('" + s.getName() + "', '" + s.getAddress()
-                + "', '" + securePassword + "')";
+        String query = "insert into Signup (password, name, address) values ('" + securePassword
+                + "', '" + s.getName() + "', '" + s.getAddress() +"')";
         Statement statement = conn.createStatement();
         boolean success = statement.execute(query);
         ResultSet res = statement.executeQuery("call IDENTITY()");
@@ -53,15 +53,20 @@ public class SignupRepositoryImpl implements SignupRepositoryCustom {
 
     @Override
     public Signup findOne(String id) throws SQLException {
-        Connection conn = em.unwrap(SessionImpl.class).connection();
-        String query = "select id,name,address,password from SIGNUP where id = '" + id + "'";
-        Statement statement = conn.createStatement();
-        ResultSet res = statement.executeQuery(query);
-        Signup s = null;
-        if(res.next()) {
-            s = new Signup(res.getLong(1), res.getString(2), res.getString(3));
-            s.setPassword(res.getString(4));
+        try {
+            Connection conn = em.unwrap(SessionImpl.class).connection();
+            String query = "select id,name,address,password from SIGNUP where id = '" + id + "'";
+            Statement statement = conn.createStatement();
+            Boolean success = statement.execute(query);
+            ResultSet res = statement.getResultSet();
+            Signup s = null;
+            if (res.next()) {
+                s = new Signup(res.getLong("id"), res.getString("name"), res.getString("address"));
+                s.setPassword(res.getString("password"));
+            }
+            return s;
+        } catch (Exception ex) {
+            throw ex;
         }
-        return s;
     }
 }
