@@ -132,7 +132,7 @@ Steps to reproduce:
 1) Go to `http://localhost:8080/admin/1` while not being logged in as an admin.
 
 ##### Fix
-1) `.antMatchers("/admin", "/admin/").authenticated()` should probably more like 
+1) In `SecurityConfiguration.java` `.antMatchers("/admin", "/admin/").authenticated()` should probably more like 
 `.antMatchers("/admin/**").authenticated()`, or more preferably, explicitly state which pages
 are ok to access unauthenticated, and then require authentication (and authorization also!) 
 for everything else.

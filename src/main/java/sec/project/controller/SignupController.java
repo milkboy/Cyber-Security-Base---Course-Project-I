@@ -102,6 +102,7 @@ public class SignupController {
 
     private String encodePassword(String password) throws NoSuchAlgorithmException {
         //Secure version:
+        //return passwordEncoder.encode(password);
 
         //Insecure version
         MessageDigest highlySecureEncryptor = MessageDigest.getInstance("MD5");
